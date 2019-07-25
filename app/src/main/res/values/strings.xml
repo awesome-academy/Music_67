@@ -13,4 +13,5 @@
         \nTry to keep something then you can enjoy it anytime</string>
     <string name="title_add_now_playing">Add to Now Playing</string>
     <string name="title_download">Download</string>
+    <string name="msg_add_success">&#160;added successfully.</string>
 </resources>

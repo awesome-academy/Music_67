@@ -4,6 +4,7 @@ interface GenresContract {
 	interface View {
 		fun loadTracksSuccess()
 		fun loadTracksFail()
+		fun getNameGenre(): String
 	}
 
 	interface Presenter {

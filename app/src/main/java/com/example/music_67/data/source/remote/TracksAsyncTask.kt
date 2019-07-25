@@ -3,6 +3,7 @@ package com.example.music_67.data.source.remote
 import com.example.music_67.base.BaseAsyncTask
 import com.example.music_67.data.model.Track
 import com.example.music_67.data.source.TracksDataSource
+import com.example.music_67.utils.StringUtils
 import com.example.music_67.utils.TrackAttributes
 import org.json.JSONObject
 import java.io.IOException
@@ -16,14 +17,14 @@ class TracksAsyncTask(private val callback: TracksDataSource.LoadTracksCallback)
 
 			for (i in 0 until collections.length()) {
 				val trackInfo = collections.getJSONObject(i)
-				val trackObject = trackInfo.getJSONObject(trackInfo.getString(TrackAttributes.TRACK))
+				val trackObject = trackInfo.getJSONObject(TrackAttributes.TRACK)
 				val id = trackObject.getInt(TrackAttributes.ID)
 				val title = trackObject.getString(TrackAttributes.TITLE)
-				val artworkUrl = trackObject.getString(TrackAttributes.ARTWORK_URL)
+				val	artworkUrl = trackObject.getString(TrackAttributes.ARTWORK_URL)
 				val duration = trackObject.getLong(TrackAttributes.DURATION)
 				val downloadable = trackObject.getBoolean(TrackAttributes.DOWNLOADABLE)
 				val downloadUrl = trackObject.getString(TrackAttributes.DOWNLOAD_URL)
-				val streamUrl = trackObject.getString(TrackAttributes.STREAM_URL)
+				val streamUrl = StringUtils.generateStreamApi(id)
 				val username = trackObject.getJSONObject(TrackAttributes.USER).getString(TrackAttributes.USERNAME)
 				var artist = ""
 				if (!trackObject.isNull(TrackAttributes.PUBLISHER_METADATA)

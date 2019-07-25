@@ -6,6 +6,7 @@ interface HomeScreenContract {
 		fun loadGenresFail()
 		fun loadDownloadedTracksSuccess()
 		fun loadDownloadedTracksFail()
+		fun getStringResource(id: Int): String
 	}
 
 	interface Presenter {

@@ -15,4 +15,21 @@ class LocalDataSource : TracksDataSource.Local {
 	override fun removeDownloadTracks(track: Track, callback: TracksDataSource.LoadTracksCallback) {
 
 	}
+
+	companion object {
+		private var INSTANCE: LocalDataSource? = null
+		@JvmStatic
+		fun getInstance(): LocalDataSource {
+			if (INSTANCE == null) {
+				synchronized(LocalDataSource::javaClass) {
+					INSTANCE = LocalDataSource()
+				}
+			}
+			return INSTANCE!!
+		}
+
+		fun clearInstance() {
+			INSTANCE = null
+		}
+	}
 }

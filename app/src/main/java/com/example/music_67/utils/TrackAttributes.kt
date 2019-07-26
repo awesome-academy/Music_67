@@ -6,6 +6,7 @@ import android.support.annotation.StringDef
 		TrackAttributes.COLLECTION,
 		TrackAttributes.TRACK,
 		TrackAttributes.USER,
+		TrackAttributes.URI,
 		TrackAttributes.PUBLISHER_METADATA,
 		TrackAttributes.ID,
 		TrackAttributes.TITLE,
@@ -22,6 +23,7 @@ annotation class TrackAttributes {
 		const val COLLECTION = "collection"
 		const val TRACK = "track"
 		const val USER = "user"
+		const val URI = "uri"
 		const val PUBLISHER_METADATA = "publisher_metadata"
 		const val ID = "id"
 		const val TITLE = "title"

@@ -38,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_8"
         android:background="@drawable/bg_round_primary"
+        android:elevation="@dimen/dp_1"
         android:padding="@dimen/dp_8"
         app:layout_constraintEnd_toEndOf="@id/imageBackground"
         app:layout_constraintStart_toStartOf="@id/imageBackground"
@@ -49,28 +50,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_16"
+        android:src="@drawable/ic_search"
         app:layout_constraintEnd_toEndOf="@id/imageBackground"
-        app:layout_constraintTop_toTopOf="@id/imageBackground"
-        android:src="@drawable/ic_search" />
+        app:layout_constraintTop_toTopOf="@id/imageBackground" />
 
     <ImageView
         android:id="@+id/imageBefore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_16"
+        android:src="@drawable/ic_navigate_before"
         app:layout_constraintStart_toStartOf="@id/imageBackground"
-        app:layout_constraintTop_toTopOf="@id/imageBackground"
-        android:src="@drawable/ic_navigate_before" />
+        app:layout_constraintTop_toTopOf="@id/imageBackground" />
+
+    <ProgressBar
+        android:id="@+id/progressLoadData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textNameGenre" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerTracks"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_8"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/dp_32"
+        android:visibility="invisible"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textNameGenre"
+        app:layout_constraintTop_toBottomOf="@id/imageBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/item_track" />
 
 </android.support.constraint.ConstraintLayout>

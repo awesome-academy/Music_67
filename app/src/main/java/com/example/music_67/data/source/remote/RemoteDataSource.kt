@@ -2,7 +2,7 @@ package com.example.music_67.data.source.remote
 
 import com.example.music_67.data.source.TracksDataSource
 
-class RemoteDataSource: TracksDataSource.Remote {
+class RemoteDataSource : TracksDataSource.Remote {
 
 	override fun getRemoteTracks(api: String, callback: TracksDataSource.LoadTracksCallback) {
 		TracksAsyncTask(callback).execute(api)
@@ -10,5 +10,22 @@ class RemoteDataSource: TracksDataSource.Remote {
 
 	override fun searchRemoteTracks(api: String, callback: TracksDataSource.LoadTracksCallback) {
 		TracksAsyncTask(callback).execute(api)
+	}
+
+	companion object {
+		private var INSTANCE: RemoteDataSource? = null
+		@JvmStatic
+		fun getInstance(): RemoteDataSource {
+			if (INSTANCE == null) {
+				synchronized(RemoteDataSource::javaClass) {
+					INSTANCE = RemoteDataSource()
+				}
+			}
+			return INSTANCE!!
+		}
+
+		fun clearInstance() {
+			INSTANCE = null
+		}
 	}
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".ui.genres.GenreActivity">
+
+    <ImageView
+        android:id="@+id/imageBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.3"
+        android:scaleType="fitXY"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/all_music_genre" />
+
+    <ImageView
+        android:id="@+id/imageCenter"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@id/imageBackground"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="@id/imageBackground"
+        app:layout_constraintStart_toStartOf="@id/imageBackground"
+        app:layout_constraintTop_toTopOf="@id/imageBackground"
+        tools:src="@drawable/all_music_genre" />
+
+    <TextView
+        android:id="@+id/textNameGenre"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@drawable/bg_round_primary"
+        android:padding="@dimen/dp_8"
+        app:layout_constraintEnd_toEndOf="@id/imageBackground"
+        app:layout_constraintStart_toStartOf="@id/imageBackground"
+        app:layout_constraintTop_toBottomOf="@id/imageCenter"
+        tools:text="@tools:sample/full_names" />
+
+    <ImageView
+        android:id="@+id/imageSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_16"
+        app:layout_constraintEnd_toEndOf="@id/imageBackground"
+        app:layout_constraintTop_toTopOf="@id/imageBackground"
+        android:src="@drawable/ic_search" />
+
+    <ImageView
+        android:id="@+id/imageBefore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_16"
+        app:layout_constraintStart_toStartOf="@id/imageBackground"
+        app:layout_constraintTop_toTopOf="@id/imageBackground"
+        android:src="@drawable/ic_navigate_before" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerTracks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_8"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textNameGenre"
+        tools:listitem="@layout/item_track" />
+
+</android.support.constraint.ConstraintLayout>

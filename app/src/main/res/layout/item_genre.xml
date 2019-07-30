@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/dp_120"
@@ -7,29 +7,29 @@
     android:background="@android:color/white"
     android:padding="@dimen/dp_8">
 
-    <ImageView
-        android:id="@+id/imageGenre"
-        android:layout_width="0dp"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/all_music_genre"
-        tools:src="@tools:sample/avatars" />
+        app:cardCornerRadius="@dimen/dp_8">
 
-    <TextView
-        android:id="@+id/textNameGenre"
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/color_accent"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="@tools:sample/full_names" />
+        <ImageView
+            android:id="@+id/imageGenre"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/all_music_genre"
+            tools:src="@tools:sample/avatars" />
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/textNameGenre"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/color_accent"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            tools:text="@tools:sample/full_names" />
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

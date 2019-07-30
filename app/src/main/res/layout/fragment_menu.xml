@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:paddingBottom="@dimen/dp_16"
+    tools:context=".ui.bottomsheetfragment.MenuFragment">
+
+    <ImageView
+        android:id="@+id/imageTrackInMenu"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dp_70"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_8"
+        android:src="@drawable/all_music_genre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textTitle"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageTrackInMenu"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/lorem" />
+
+    <TextView
+        android:id="@+id/textArtist"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageTrackInMenu"
+        app:layout_constraintTop_toBottomOf="@id/textTitle"
+        tools:text="@tools:sample/full_names" />
+
+    <View
+        android:id="@+id/dividerOne"
+        style="@style/Divider.Horizontal"
+        android:layout_marginTop="@dimen/dp_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageTrackInMenu" />
+
+    <ImageView
+        android:id="@+id/imageAdd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_8"
+        android:src="@drawable/ic_add"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dividerOne" />
+
+    <TextView
+        android:id="@+id/textAddNowPlaying"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_8"
+        android:text="@string/title_add_now_playing"
+        app:layout_constraintStart_toEndOf="@id/imageAdd"
+        app:layout_constraintTop_toBottomOf="@id/dividerOne" />
+
+    <ImageView
+        android:id="@+id/imageDownload"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_8"
+        android:src="@drawable/ic_file_download"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageAdd" />
+
+    <TextView
+        android:id="@+id/textDownload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_8"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:text="@string/title_download"
+        app:layout_constraintStart_toEndOf="@id/imageDownload"
+        app:layout_constraintTop_toBottomOf="@id/textAddNowPlaying" />
+
+</android.support.constraint.ConstraintLayout>

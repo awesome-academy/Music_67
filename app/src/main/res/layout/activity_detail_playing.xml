@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".ui.detailplaying.DetailPlayingActivity">
+
+    <ImageView
+        android:id="@+id/imageBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.1"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/all_music_genre" />
+
+    <ImageView
+        android:id="@+id/imageCenter"
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="@dimen/dp_300"
+        android:layout_marginTop="@dimen/dp_40"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/imageBackground"
+        app:srcCompat="@drawable/all_music_genre" />
+
+    <TextView
+        android:id="@+id/textTitle"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_8"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageCenter"
+        tools:text="@tools:sample/full_names" />
+
+    <TextView
+        android:id="@+id/textArtist"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textTitle"
+        tools:text="@tools:sample/lorem" />
+
+    <SeekBar
+        android:id="@+id/seekBarPlaying"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/imageBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textArtist" />
+
+    <TextView
+        android:id="@+id/textCurrentTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/seekBarPlaying"
+        tools:text="@tools:sample/date/hhmm" />
+
+    <TextView
+        android:id="@+id/textDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/seekBarPlaying"
+        tools:text="@tools:sample/date/hhmm" />
+
+    <ImageView
+        android:id="@+id/imagePlay"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/seekBarPlaying"
+        app:srcCompat="@drawable/ic_play_arrow" />
+
+    <ImageView
+        android:id="@+id/imageNext"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imagePlay"
+        app:layout_constraintTop_toBottomOf="@id/seekBarPlaying"
+        app:srcCompat="@drawable/ic_skip_next" />
+
+    <ImageView
+        android:id="@+id/imagePrevious"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imagePlay"
+        app:layout_constraintTop_toBottomOf="@id/seekBarPlaying"
+        app:srcCompat="@drawable/ic_skip_previous" />
+
+    <ImageView
+        android:id="@+id/imageShuffle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageNext"
+        app:layout_constraintTop_toBottomOf="@id/textDuration"
+        app:srcCompat="@drawable/ic_shuffle" />
+
+    <ImageView
+        android:id="@+id/imageLoop"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imagePrevious"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textCurrentTime"
+        app:srcCompat="@drawable/ic_repeat" />
+
+    <ImageView
+        android:id="@+id/imageBefore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/imageCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_navigate_before" />
+
+    <ImageView
+        android:id="@+id/imageDownload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/imageCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageCenter"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_file_download" />
+
+</android.support.constraint.ConstraintLayout>

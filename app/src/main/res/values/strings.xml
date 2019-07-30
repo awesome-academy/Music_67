@@ -11,4 +11,6 @@
     <string name="title_country">Country</string>
     <string name="msg_empty_list">You have downloaded no songs
         \nTry to keep something then you can enjoy it anytime</string>
+    <string name="title_add_now_playing">Add to Now Playing</string>
+    <string name="title_download">Download</string>
 </resources>

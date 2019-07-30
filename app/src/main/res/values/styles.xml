@@ -12,4 +12,13 @@
         <item name="android:windowBackground">@drawable/bg_splashscreen</item>
     </style>
 
+    <style name="Divider">
+        <item name="android:background">@color/color_primary</item>
+    </style>
+
+    <style name="Divider.Horizontal" parent="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_1</item>
+    </style>
+
 </resources>

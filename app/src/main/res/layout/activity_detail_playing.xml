@@ -149,4 +149,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_file_download" />
 
+    <ImageView
+        android:id="@+id/imageLibrary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/imageCenter"
+        app:layout_constraintEnd_toStartOf="@id/imageDownload"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_queue_music" />
+
 </android.support.constraint.ConstraintLayout>

@@ -2,13 +2,21 @@ package vn.sunasterisk.music_67.service
 
 import android.media.MediaPlayer
 import vn.sunasterisk.music_67.data.model.Track
+import vn.sunasterisk.music_67.utils.LoopType
+import vn.sunasterisk.music_67.utils.ShuffleType
 import vn.sunasterisk.music_67.utils.StringUtils
 import java.io.IOException
+import kotlin.random.Random
 
 class PlayingTracksManager(val playingTracksService: PlayingTracksService) : PlayingTracksInterface {
 	private val mediaPlayer = MediaPlayer()
 	private lateinit var currentTrack: Track
 	private var trackDuration: Long = 0
+	@ShuffleType
+	private var shuffleType = ShuffleType.NO
+	@LoopType
+	private var loopType = LoopType.NO
+
 	override fun create(track: Track) {
 		mediaPlayer.reset()
 		try {
@@ -33,7 +41,27 @@ class PlayingTracksManager(val playingTracksService: PlayingTracksService) : Pla
 	}
 
 	override fun next() {
-		changeTrack(getNextTrack())
+		when (loopType) {
+			LoopType.NO -> {
+				when (shuffleType) {
+					ShuffleType.YES -> changeTrack(getRandomTrack())
+					ShuffleType.NO -> {
+						if (PlayingSet.currentPosition == PlayingSet.playingSet.size - 1)
+							stop()
+						else changeTrack(getNextTrack())
+					}
+				}
+			}
+			LoopType.ONE -> {
+				create(currentTrack)
+			}
+			LoopType.ALL -> {
+				when (shuffleType) {
+					ShuffleType.YES -> changeTrack(getRandomTrack())
+					ShuffleType.NO -> changeTrack(getNextTrack())
+				}
+			}
+		}
 	}
 
 	override fun getNextTrack(): Track {
@@ -45,7 +73,17 @@ class PlayingTracksManager(val playingTracksService: PlayingTracksService) : Pla
 	}
 
 	override fun previous() {
-		changeTrack(getPreviousTrack())
+		when (loopType) {
+			LoopType.NO or LoopType.ALL -> {
+				when (shuffleType) {
+					ShuffleType.YES -> changeTrack(getRandomTrack())
+					ShuffleType.NO -> changeTrack(getPreviousTrack())
+				}
+			}
+			LoopType.ONE -> {
+				create(currentTrack)
+			}
+		}
 	}
 
 	override fun getPreviousTrack(): Track {
@@ -72,6 +110,11 @@ class PlayingTracksManager(val playingTracksService: PlayingTracksService) : Pla
 	override fun getCurrentPosition() = mediaPlayer.currentPosition
 	override fun isPlaying(): Boolean = mediaPlayer.isPlaying
 
+	private fun getRandomTrack(): Track {
+		val random = Random.nextInt(0, PlayingSet.playingSet.size - 1)
+		return PlayingSet.playingSet.elementAt(random)
+	}
+
 	private fun changeTrack(track: Track) {
 		currentTrack = track
 		create(track)
@@ -80,6 +123,17 @@ class PlayingTracksManager(val playingTracksService: PlayingTracksService) : Pla
 	fun getCurrentTrack(): Track {
 		currentTrack = PlayingSet.playingSet.elementAt(PlayingSet.currentPosition)
 		return currentTrack
+	}
+
+	@ShuffleType fun getShuffleType() = shuffleType
+	@LoopType fun getLoopType() = loopType
+
+	fun setShuffleType(@ShuffleType shuffleType: Int) {
+		this.shuffleType = shuffleType
+	}
+
+	fun setLoopType(@LoopType loopType: Int) {
+		this.loopType = loopType
 	}
 
 	companion object {

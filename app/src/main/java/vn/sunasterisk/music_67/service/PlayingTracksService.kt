@@ -6,6 +6,8 @@ import android.media.MediaPlayer
 import android.os.Binder
 import android.os.IBinder
 import vn.sunasterisk.music_67.data.model.Track
+import vn.sunasterisk.music_67.utils.LoopType
+import vn.sunasterisk.music_67.utils.ShuffleType
 
 const val ACTION_CREATE = "vn.sunasterisk.music_67.CREATE"
 const val ACTION_PLAY_PAUSE = "vn.sunasterisk.music_67.PLAY_PAUSE"
@@ -17,10 +19,8 @@ class PlayingTracksService : Service(), PlayingTracksInterface, MediaPlayer.OnPr
 	private lateinit var localBinder: LocalBinder
 	private lateinit var playingTracksManager: PlayingTracksManager
 	private val listeners = ArrayList<TrackStateListener>()
-
-	inner class LocalBinder : Binder() {
-		fun getServive(): PlayingTracksService = this@PlayingTracksService
-	}
+	private var shuffleType = ShuffleType.NO
+	private var loopType = LoopType.NO
 
 	override fun onBind(intent: Intent): IBinder {
 		return localBinder
@@ -91,7 +91,6 @@ class PlayingTracksService : Service(), PlayingTracksInterface, MediaPlayer.OnPr
 
 	override fun seek(position: Int) {
 		playingTracksManager.seek(position)
-
 	}
 
 	override fun getNextTrack() = playingTracksManager.getNextTrack()
@@ -101,25 +100,46 @@ class PlayingTracksService : Service(), PlayingTracksInterface, MediaPlayer.OnPr
 	override fun isPlaying(): Boolean = playingTracksManager.isPlaying()
 	override fun onPrepared(mp: MediaPlayer?) {
 		start()
-		if (!PlayingSet.isStartActivity)
-			sendToListeners()
-		PlayingSet.isStartActivity = false
+		sendToListeners()
 	}
 
 	override fun onCompletion(mp: MediaPlayer?) {
-		if (PlayingSet.playingSet.size <= 1) {
-			stopSelf()
-		} else {
-			next()
-		}
+		next()
 	}
 
 	override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
 		return true
 	}
 
-	fun getCurrentTrack() = playingTracksManager.getCurrentTrack()
+	fun shuffleOn() {
+		shuffleType = ShuffleType.YES
+		playingTracksManager.setShuffleType(shuffleType)
+	}
 
+	fun shuffleOff() {
+		shuffleType = ShuffleType.NO
+		playingTracksManager.setShuffleType(shuffleType)
+	}
+
+	fun loopNon() {
+		loopType = LoopType.NO
+		playingTracksManager.setLoopType(loopType)
+	}
+
+	fun loopOne() {
+		loopType = LoopType.ONE
+		playingTracksManager.setLoopType(loopType)
+	}
+
+	fun loopAll() {
+		loopType = LoopType.ALL
+		playingTracksManager.setLoopType(loopType)
+	}
+
+	fun getShuffleType() = playingTracksManager.getShuffleType()
+	fun getLoopType() = playingTracksManager.getLoopType()
+
+	fun getCurrentTrack() = playingTracksManager.getCurrentTrack()
 	fun addListener(listener: TrackStateListener) {
 		listeners.add(listener)
 	}
@@ -131,6 +151,11 @@ class PlayingTracksService : Service(), PlayingTracksInterface, MediaPlayer.OnPr
 	fun sendToListeners() {
 		for (i in 0 until listeners.size) {
 			listeners[i].completeListener()
+			listeners[i].startListener()
 		}
+	}
+
+	inner class LocalBinder : Binder() {
+		fun getServive(): PlayingTracksService = this@PlayingTracksService
 	}
 }

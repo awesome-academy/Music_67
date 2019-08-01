@@ -63,6 +63,10 @@ class GenreActivity : BaseActivity(), GenresContract.View, View.OnClickListener 
 	override fun onClick(v: View?) {
 		when (v) {
 			imageBefore -> onBackPressed()
+			buttonPlayAll -> {
+				PlayingSet.playingSet.addAll(genrePresent.tracks)
+				firstTrackClicked()
+			}
 		}
 	}
 
@@ -106,6 +110,12 @@ class GenreActivity : BaseActivity(), GenresContract.View, View.OnClickListener 
 			putExtra(TrackAttributes.TRACK, track)
 		}
 		return detailIntent
+	}
+
+	private fun firstTrackClicked() {
+		val track = genrePresent.tracks[0]
+		PlayingSet.currentPosition = 0
+		startActivity(getDetailIntent(track))
 	}
 
 	companion object {

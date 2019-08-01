@@ -133,6 +133,7 @@
         android:id="@+id/imageBefore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onClick"
         app:layout_constraintBottom_toTopOf="@id/imageCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

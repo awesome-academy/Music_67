@@ -8,7 +8,7 @@ import vn.sunasterisk.music_67.utils.StringUtils
 import java.io.IOException
 import kotlin.random.Random
 
-class PlayingTracksManager(val playingTracksService: PlayingTracksService) : PlayingTracksInterface {
+class PlayingTracksManager(private val playingTracksService: PlayingTracksService) : PlayingTracksInterface {
 	private val mediaPlayer = MediaPlayer()
 	private lateinit var currentTrack: Track
 	private var trackDuration: Long = 0
@@ -125,8 +125,11 @@ class PlayingTracksManager(val playingTracksService: PlayingTracksService) : Pla
 		return currentTrack
 	}
 
-	@ShuffleType fun getShuffleType() = shuffleType
-	@LoopType fun getLoopType() = loopType
+	@ShuffleType
+	fun getShuffleType() = shuffleType
+
+	@LoopType
+	fun getLoopType() = loopType
 
 	fun setShuffleType(@ShuffleType shuffleType: Int) {
 		this.shuffleType = shuffleType

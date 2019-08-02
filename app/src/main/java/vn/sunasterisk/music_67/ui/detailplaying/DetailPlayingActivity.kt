@@ -28,22 +28,21 @@ class DetailPlayingActivity : AppCompatActivity(), View.OnClickListener, TrackSt
 	private lateinit var playingTracksService: PlayingTracksService
 	private lateinit var handler: Handler
 	private lateinit var thread: Thread
-	private var isBound = true
 	private lateinit var objectAnimator: ObjectAnimator
 	private val serviceConnection = object : ServiceConnection {
 		override fun onServiceDisconnected(name: ComponentName?) {
-			isBound = false
 		}
 
 		override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
 			val binder = service as PlayingTracksService.LocalBinder
 			playingTracksService = binder.getServive()
+			updateState()
 			getState()
 			updateShuffle()
 			updateLoop()
-			updateState()
-			isBound = true
 			playingTracksService.addListener(this@DetailPlayingActivity)
+			if (playingTracksService.isPlaying()) playListener()
+			else pauseListener()
 		}
 	}
 
@@ -64,7 +63,6 @@ class DetailPlayingActivity : AppCompatActivity(), View.OnClickListener, TrackSt
 		if (intent.action != ACTION_START_FROM_NOTIFICATION)
 			startService(playSongIntent)
 		bindService(playSongIntent, serviceConnection, Context.BIND_AUTO_CREATE)
-		pauseToPlay()
 	}
 
 	override fun onDestroy() {
@@ -76,33 +74,9 @@ class DetailPlayingActivity : AppCompatActivity(), View.OnClickListener, TrackSt
 	override fun onClick(v: View?) {
 		when (v) {
 			imageBefore -> onBackPressed()
-			imagePlay -> {
-				if (::playingTracksService.isInitialized) {
-					if (playingTracksService.isPlaying()) {
-						playingTracksService.pause()
-						playToPause()
-						if (objectAnimator.isRunning)
-							objectAnimator.pause()
-					} else {
-						playingTracksService.start()
-						pauseToPlay()
-						if (objectAnimator.isPaused) objectAnimator.resume()
-						else objectAnimator.start()
-					}
-				}
-			}
-			imageNext -> {
-				playingTracksService.next()
-				currentTrack()
-				if (objectAnimator.isRunning)
-					objectAnimator.end()
-			}
-			imagePrevious -> {
-				playingTracksService.previous()
-				currentTrack()
-				if (objectAnimator.isRunning)
-					objectAnimator.end()
-			}
+			imagePlay -> handlePlay()
+			imageNext -> handleNext()
+			imagePrevious -> handlePrevious()
 			imageShuffle -> {
 				handleShuffle()
 				updateShuffle()
@@ -133,6 +107,21 @@ class DetailPlayingActivity : AppCompatActivity(), View.OnClickListener, TrackSt
 
 	override fun startListener() {
 		objectAnimator.start()
+		pauseToPlay()
+		enableClick()
+	}
+
+	override fun pauseListener() {
+		if(objectAnimator.isRunning)
+			objectAnimator.pause()
+		pauseToPlay()
+	}
+
+	override fun playListener() {
+		if (objectAnimator.isPaused)
+			objectAnimator.resume()
+		else objectAnimator.start()
+		playToPause()
 	}
 
 	private fun registerListener() {
@@ -207,8 +196,8 @@ class DetailPlayingActivity : AppCompatActivity(), View.OnClickListener, TrackSt
 	private fun updateUI(track: Track) {
 		getUI(track)
 		pauseToPlay()
-		getState()
 		updateState()
+		getState()
 	}
 
 	private fun getContentIntent() {
@@ -217,10 +206,11 @@ class DetailPlayingActivity : AppCompatActivity(), View.OnClickListener, TrackSt
 	}
 
 	private fun getUI(track: Track) {
-		if (!track.title.isNullOrEmpty()) textTitle.text = track.title
-		if (!track.artist.isNullOrEmpty()) textArtist.text = track.artist
-		if (track.duration != null)
+		track.title?.let { textTitle.text = track.title }
+		track.artist?.let { textArtist.text = track.artist }
+		track.duration?.let {
 			textDuration.text = TimeConvert.convertMilisecondToFormatTime(track.duration)
+		}
 		textCurrentTime.text = TimeConvert.convertMilisecondToFormatTime(0)
 		Glide.with(applicationContext)
 				.load(track.artworkUrl)
@@ -233,13 +223,14 @@ class DetailPlayingActivity : AppCompatActivity(), View.OnClickListener, TrackSt
 				.error(R.drawable.icon_app)
 				.apply(RequestOptions.circleCropTransform())
 				.into(imageCenter)
-		if (track.downloadable != null)
+		track.downloadable?.let {
 			if (!track.downloadable) imageDownload.visibility = View.GONE
+		}
+		disableClick()
 	}
 
 	private fun currentTrack() {
-		val currentTrack = playingTracksService.getCurrentTrack()
-		updateUI(currentTrack)
+		updateUI(playingTracksService.getCurrentTrack())
 	}
 
 	private fun createRotation() {
@@ -275,12 +266,46 @@ class DetailPlayingActivity : AppCompatActivity(), View.OnClickListener, TrackSt
 		}
 	}
 
+	private fun handlePlay() {
+		if (::playingTracksService.isInitialized) {
+			if (playingTracksService.isPlaying())
+				playingTracksService.pause()
+			else playingTracksService.start()
+		}
+	}
+
+	private fun handleNext() {
+		playingTracksService.next()
+		currentTrack()
+		if (objectAnimator.isRunning)
+			objectAnimator.end()
+	}
+
+	private fun handlePrevious() {
+		playingTracksService.previous()
+		currentTrack()
+		if (objectAnimator.isRunning)
+			objectAnimator.end()
+	}
+
 	private fun pauseToPlay() {
 		imagePlay.setImageResource(R.drawable.ic_pause)
 	}
 
 	private fun playToPause() {
 		imagePlay.setImageResource(R.drawable.ic_play_arrow)
+	}
+
+	private fun disableClick() {
+		imagePlay.isClickable = false
+		imagePrevious.isClickable = false
+		imageNext.isClickable = false
+	}
+
+	private fun enableClick() {
+		imagePlay.isClickable = true
+		imagePrevious.isClickable = true
+		imageNext.isClickable = true
 	}
 
 	companion object {

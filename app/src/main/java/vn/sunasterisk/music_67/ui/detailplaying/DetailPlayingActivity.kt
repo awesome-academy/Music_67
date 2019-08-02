@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_detail_playing.*
 import vn.sunasterisk.music_67.R
 import vn.sunasterisk.music_67.data.model.Track
 import vn.sunasterisk.music_67.service.ACTION_CREATE
+import vn.sunasterisk.music_67.service.ACTION_START_FROM_NOTIFICATION
 import vn.sunasterisk.music_67.service.PlayingTracksService
 import vn.sunasterisk.music_67.service.TrackStateListener
 import vn.sunasterisk.music_67.utils.*
@@ -52,15 +53,16 @@ class DetailPlayingActivity : AppCompatActivity(), View.OnClickListener, TrackSt
 		getContentIntent()
 		playingTracksService = PlayingTracksService()
 		registerListener()
+		createRotation()
 	}
 
 	override fun onStart() {
 		super.onStart()
-		val playSongIntent = Intent(this, PlayingTracksService::class.java)
-		playSongIntent.apply {
+		val playSongIntent = Intent(this, PlayingTracksService::class.java).apply {
 			action = ACTION_CREATE
 		}
-		startService(playSongIntent)
+		if (intent.action != ACTION_START_FROM_NOTIFICATION)
+			startService(playSongIntent)
 		bindService(playSongIntent, serviceConnection, Context.BIND_AUTO_CREATE)
 		pauseToPlay()
 	}
@@ -130,7 +132,6 @@ class DetailPlayingActivity : AppCompatActivity(), View.OnClickListener, TrackSt
 	}
 
 	override fun startListener() {
-		createRotation()
 		objectAnimator.start()
 	}
 

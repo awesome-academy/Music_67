@@ -21,42 +21,38 @@
 
     <ImageView
         android:id="@+id/imageCenter"
-        android:layout_width="@dimen/dp_180"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/dp_120"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@id/imageBackground"
         app:layout_constraintEnd_toEndOf="@id/imageBackground"
         app:layout_constraintStart_toStartOf="@id/imageBackground"
-        app:layout_constraintTop_toTopOf="@id/imageBackground"
+        app:layout_constraintTop_toBottomOf="@id/textNameGenre"
         tools:src="@drawable/all_music_genre" />
 
     <TextView
         android:id="@+id/textNameGenre"
-        style="@style/TextAppearance.AppCompat.Large"
-        android:layout_width="wrap_content"
+        style="@style/TextTitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_8"
         android:elevation="@dimen/dp_1"
-        android:padding="@dimen/dp_8"
-        app:layout_constraintBottom_toTopOf="@id/imageCenter"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="@id/imageBackground"
         app:layout_constraintStart_toStartOf="@id/imageBackground"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/imageBefore"
         tools:text="@tools:sample/full_names" />
 
     <Button
         android:id="@+id/buttonPlayAll"
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_8"
-        android:background="@drawable/bg_round_primary"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_play_all"
         android:onClick="onClick"
-        android:padding="@dimen/dp_8"
-        android:text="@string/title_play_all"
+        app:layout_constraintBottom_toBottomOf="@id/imageBackground"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="@id/imageBackground"
         app:layout_constraintStart_toStartOf="@id/imageBackground"
-        app:layout_constraintTop_toBottomOf="@id/imageCenter" />
+        app:layout_constraintTop_toBottomOf="@id/imageCenter"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageSearch"

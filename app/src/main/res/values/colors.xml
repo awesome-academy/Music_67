@@ -2,6 +2,7 @@
 <resources>
     <color name="color_primary">#FCE602</color>
     <color name="color_primary_dark">#C4B202</color>
-    <color name="color_accent">#455B66</color>
+    <color name="color_accent">#093B4E</color>
     <color name="color_black">#000000</color>
+    <color name="color_playing_item">#33FCE602</color>
 </resources>

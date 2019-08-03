@@ -74,14 +74,14 @@ class PlayingTracksManager(private val playingTracksService: PlayingTracksServic
 
 	override fun previous() {
 		when (loopType) {
-			LoopType.NO or LoopType.ALL -> {
+			LoopType.ONE -> {
+				create(currentTrack)
+			}
+			else -> {
 				when (shuffleType) {
 					ShuffleType.YES -> changeTrack(getRandomTrack())
 					ShuffleType.NO -> changeTrack(getPreviousTrack())
 				}
-			}
-			LoopType.ONE -> {
-				create(currentTrack)
 			}
 		}
 	}

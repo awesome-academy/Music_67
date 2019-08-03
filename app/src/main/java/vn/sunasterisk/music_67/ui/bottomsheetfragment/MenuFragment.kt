@@ -48,12 +48,20 @@ class MenuFragment : BottomSheetDialogFragment(), View.OnClickListener {
 						Toast.LENGTH_SHORT)
 						.show()
 			}
+			textAddNowPlaying -> {
+				PlayingSet.playingSet.add(trackReceived)
+				Toast.makeText(context,
+						trackReceived.title + getString(R.string.msg_add_success),
+						Toast.LENGTH_SHORT)
+						.show()
+			}
 		}
 	}
 
 	private fun registerListener() {
 		imageAdd.setOnClickListener(this)
 		imageDownload.setOnClickListener(this)
+		textAddNowPlaying.setOnClickListener(this)
 	}
 
 	companion object {

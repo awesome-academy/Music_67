@@ -59,7 +59,7 @@ class PlayingTracksService : Service(), PlayingTracksInterface, MediaPlayer.OnPr
 			}
 			ACTION_PLAY_PAUSE -> {
 				if (isPlaying()) pause()
-                else start()
+				else start()
 			}
 			ACTION_NEXT -> next()
 			ACTION_PREVIOUS -> previous()
@@ -131,6 +131,7 @@ class PlayingTracksService : Service(), PlayingTracksInterface, MediaPlayer.OnPr
 	}
 
 	override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
+		next()
 		return true
 	}
 

@@ -48,14 +48,17 @@ class GenreActivity : BaseActivity(), GenresContract.View, View.OnClickListener 
 	override fun onStart() {
 		super.onStart()
 		getIntentContent()
+		initMiniPlay(R.id.frameMiniPlaying)
 		tracksRepository = TracksRepository.getInstance(
 				RemoteDataSource.getInstance(),
 				LocalDataSource.getInstance()
 		)
 		genrePresent = GenrePresent(tracksRepository, this)
-		trackAdapter = TrackAdapter(this,
+		trackAdapter = TrackAdapter(
+				this,
 				genrePresent.tracks as ArrayList<Track>,
-				trackClickListener)
+				trackClickListener
+		)
 		recyclerTracks.adapter = trackAdapter
 		genrePresent.loadTracks()
 	}
@@ -71,12 +74,11 @@ class GenreActivity : BaseActivity(), GenresContract.View, View.OnClickListener 
 	}
 
 	override fun getContentViewId(): Int = R.layout.activity_genre
-	override fun onTrackClicked(view: View) {
 
-	}
 
-	override fun showMiniPlaying(isTrackPlaying: Boolean, viewId: Int) {
-
+	override fun showMiniPlaying(isTrackPlaying: Boolean) {
+		if (isTrackPlaying) frameMiniPlaying.visibility = View.VISIBLE
+		else frameMiniPlaying.visibility = View.GONE
 	}
 
 	override fun loadTracksSuccess() {

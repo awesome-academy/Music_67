@@ -55,19 +55,11 @@ class PlayingTracksService : Service(), PlayingTracksInterface, MediaPlayer.OnPr
 					playingTracksManager.stop()
 				}
 				create(playingTracksManager.getCurrentTrack())
-				createNotification(getCurrentTrack())
+				createNotification()
 			}
 			ACTION_PLAY_PAUSE -> {
-				when (isPlaying()) {
-					true -> {
-						pause()
-						playToPause()
-					}
-					else -> {
-						start()
-						pauseToPlay()
-					}
-				}
+				if (isPlaying()) pause()
+                else start()
 			}
 			ACTION_NEXT -> next()
 			ACTION_PREVIOUS -> previous()
@@ -91,12 +83,14 @@ class PlayingTracksService : Service(), PlayingTracksInterface, MediaPlayer.OnPr
 	override fun start() {
 		playingTracksManager.start()
 		pauseToPlay()
+		sendPlayToListeners()
 	}
 
 	override fun pause() {
 		playingTracksManager.pause()
 		stopForeground(false)
 		playToPause()
+		sendPauseToListeners()
 	}
 
 	override fun next() {
@@ -149,20 +143,11 @@ class PlayingTracksService : Service(), PlayingTracksInterface, MediaPlayer.OnPr
 		}
 	}
 
-	private fun createNotification(track: Track) {
+	private fun createNotification() {
 		createNotificationChannel()
 		remoteViews = RemoteViews(packageName, R.layout.layout_notification)
 		expandedRemoteViews = RemoteViews(packageName, R.layout.layout_large_notification)
-		notificationIntent = Intent(this, DetailPlayingActivity::class.java)
-				.apply {
-					putExtra(TrackAttributes.TRACK, track)
-					action = ACTION_START_FROM_NOTIFICATION
-					flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-				}
-		pendingIntent = PendingIntent.getActivity(
-				this, 0,
-				notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT
-		)
+
 		val pausePlayIntent = Intent(this, PlayingTracksService::class.java).apply {
 			action = ACTION_PLAY_PAUSE
 		}
@@ -182,13 +167,22 @@ class PlayingTracksService : Service(), PlayingTracksInterface, MediaPlayer.OnPr
 		notification = NotificationCompat.Builder(this, CHANNEL_ID)
 				.setSmallIcon(R.drawable.ic_headphone)
 				.setStyle(NotificationCompat.DecoratedCustomViewStyle())
-				.setContentIntent(pendingIntent)
 				.setCustomContentView(remoteViews)
 				.setCustomBigContentView(expandedRemoteViews)
 				.build()
 	}
 
 	private fun updateNotificationUI(track: Track) {
+		notificationIntent = Intent(this, DetailPlayingActivity::class.java)
+				.apply {
+					putExtra(TrackAttributes.TRACK, track)
+					action = ACTION_START_FROM_NOTIFICATION
+					flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+				}
+		pendingIntent = PendingIntent.getActivity(
+				this, 0,
+				notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT
+		)
 		remoteViews.setTextViewText(R.id.textNameTrack, track.title)
 		remoteViews.setImageViewResource(R.id.imageTrackInNotification, R.drawable.all_music_genre)
 		expandedRemoteViews.setTextViewText(R.id.textNameTrack, track.title)
@@ -212,7 +206,7 @@ class PlayingTracksService : Service(), PlayingTracksInterface, MediaPlayer.OnPr
 				.asBitmap()
 				.load(track.artworkUrl)
 				.into(notificationTargetExpanded)
-
+		notification.contentIntent = pendingIntent
 		startForeground(NOTIFICATION_ID, notification)
 	}
 
@@ -226,6 +220,26 @@ class PlayingTracksService : Service(), PlayingTracksInterface, MediaPlayer.OnPr
 		remoteViews.setImageViewResource(R.id.imagePlay, R.drawable.ic_play_arrow)
 		expandedRemoteViews.setImageViewResource(R.id.imagePlay, R.drawable.ic_play_arrow)
 		NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, notification)
+	}
+
+
+	private fun sendToListeners() {
+		for (i in 0 until listeners.size) {
+			listeners[i].completeListener()
+			listeners[i].startListener()
+		}
+	}
+
+	private fun sendPauseToListeners() {
+		for (i in 0 until listeners.size) {
+			listeners[i].pauseListener()
+		}
+	}
+
+	private fun sendPlayToListeners() {
+		for (i in 0 until listeners.size) {
+			listeners[i].playListener()
+		}
 	}
 
 	fun shuffleOn() {
@@ -255,7 +269,6 @@ class PlayingTracksService : Service(), PlayingTracksInterface, MediaPlayer.OnPr
 
 	fun getShuffleType() = playingTracksManager.getShuffleType()
 	fun getLoopType() = playingTracksManager.getLoopType()
-
 	fun getCurrentTrack() = playingTracksManager.getCurrentTrack()
 	fun addListener(listener: TrackStateListener) {
 		listeners.add(listener)
@@ -263,13 +276,6 @@ class PlayingTracksService : Service(), PlayingTracksInterface, MediaPlayer.OnPr
 
 	fun removeListener(listener: TrackStateListener) {
 		listeners.remove(listener)
-	}
-
-	fun sendToListeners() {
-		for (i in 0 until listeners.size) {
-			listeners[i].completeListener()
-			listeners[i].startListener()
-		}
 	}
 
 	inner class LocalBinder : Binder() {

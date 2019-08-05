@@ -9,7 +9,7 @@ class RemoteDataSource : TracksDataSource.Remote {
 	}
 
 	override fun searchRemoteTracks(api: String, callback: TracksDataSource.LoadTracksCallback) {
-		TracksAsyncTask(callback).execute(api)
+		SearchAsyncTask(callback).execute(api)
 	}
 
 	companion object {

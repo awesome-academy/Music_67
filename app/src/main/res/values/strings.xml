@@ -18,4 +18,8 @@
     <string name="title_now_playing">Now Playing</string>
     <string name="menu_search">Search</string>
     <string name="menu_home">Home</string>
+    <string name="title_search_tracks">Search tracks</string>
+    <string name="msg_no_tracks">No tracks found. Please try another keyword.</string>
+    <string name="msg_no_input">You have inputted nothing</string>
+    <string name="msg_no_internet">No Internet connection</string>
 </resources>

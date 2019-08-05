@@ -85,7 +85,7 @@ class MiniPlaying : Fragment(), View.OnClickListener, TrackStateListener {
 	}
 
 	override fun pauseListener() {
-		if(objectAnimator.isRunning)
+		if (objectAnimator.isRunning)
 			objectAnimator.pause()
 		playToPause()
 	}
@@ -108,8 +108,8 @@ class MiniPlaying : Fragment(), View.OnClickListener, TrackStateListener {
 		track.artist?.let { textArtist.text = track.artist }
 		Glide.with(this)
 				.load(track.artworkUrl)
-				.fallback(R.drawable.icon_app)
-				.error(R.drawable.icon_app)
+				.fallback(R.mipmap.ic_app_round)
+				.error(R.mipmap.ic_app_round)
 				.apply(RequestOptions.circleCropTransform())
 				.into(imageTrack)
 	}
@@ -150,14 +150,14 @@ class MiniPlaying : Fragment(), View.OnClickListener, TrackStateListener {
 
 	private fun handleNext() {
 		playingTracksService.next()
-		currentTrack()
+//		currentTrack()
 		if (objectAnimator.isRunning)
 			objectAnimator.end()
 	}
 
 	private fun handlePrevious() {
 		playingTracksService.previous()
-		currentTrack()
+//		currentTrack()
 		if (objectAnimator.isRunning)
 			objectAnimator.end()
 	}

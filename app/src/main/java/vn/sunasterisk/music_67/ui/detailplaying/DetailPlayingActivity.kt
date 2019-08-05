@@ -21,11 +21,12 @@ import vn.sunasterisk.music_67.service.ACTION_CREATE
 import vn.sunasterisk.music_67.service.ACTION_START_FROM_NOTIFICATION
 import vn.sunasterisk.music_67.service.PlayingTracksService
 import vn.sunasterisk.music_67.service.TrackStateListener
+import vn.sunasterisk.music_67.ui.nowplaying.NowPlayingFragment
 import vn.sunasterisk.music_67.utils.*
 
 class DetailPlayingActivity : AppCompatActivity(), View.OnClickListener, TrackStateListener,
 		SeekBar.OnSeekBarChangeListener {
-	private lateinit var playingTracksService: PlayingTracksService
+	lateinit var playingTracksService: PlayingTracksService
 	private lateinit var handler: Handler
 	private lateinit var thread: Thread
 	private lateinit var objectAnimator: ObjectAnimator
@@ -85,6 +86,16 @@ class DetailPlayingActivity : AppCompatActivity(), View.OnClickListener, TrackSt
 				handleLoop()
 				updateLoop()
 			}
+			imageLibrary -> {
+				val transaction = supportFragmentManager.beginTransaction()
+				transaction.replace(
+						R.id.constraintHolder,
+						NowPlayingFragment(),
+						NowPlayingFragment::class.java.name
+				)
+						.addToBackStack(null)
+						.commit()
+			}
 		}
 	}
 
@@ -112,7 +123,7 @@ class DetailPlayingActivity : AppCompatActivity(), View.OnClickListener, TrackSt
 	}
 
 	override fun pauseListener() {
-		if(objectAnimator.isRunning)
+		if (objectAnimator.isRunning)
 			objectAnimator.pause()
 		pauseToPlay()
 	}
@@ -131,6 +142,8 @@ class DetailPlayingActivity : AppCompatActivity(), View.OnClickListener, TrackSt
 		seekBarPlaying.setOnSeekBarChangeListener(this)
 		imageShuffle.setOnClickListener(this)
 		imageLoop.setOnClickListener(this)
+		imageLibrary.setOnClickListener(this)
+		imageBefore.setOnClickListener(this)
 	}
 
 	private fun handleShuffle() {
@@ -219,8 +232,8 @@ class DetailPlayingActivity : AppCompatActivity(), View.OnClickListener, TrackSt
 				.into(imageBackground)
 		Glide.with(applicationContext)
 				.load(StringUtils.getBigArtwork(track.artworkUrl!!))
-				.fallback(R.drawable.icon_app)
-				.error(R.drawable.icon_app)
+				.fallback(R.mipmap.ic_app_round)
+				.error(R.mipmap.ic_app_round)
 				.apply(RequestOptions.circleCropTransform())
 				.into(imageCenter)
 		track.downloadable?.let {

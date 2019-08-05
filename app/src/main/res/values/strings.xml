@@ -15,4 +15,7 @@
     <string name="title_download">Download</string>
     <string name="msg_add_success">&#160;added successfully.</string>
     <string name="title_play_all">Play All</string>
+    <string name="title_now_playing">Now Playing</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_home">Home</string>
 </resources>

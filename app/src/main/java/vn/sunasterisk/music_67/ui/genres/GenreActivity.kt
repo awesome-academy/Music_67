@@ -38,7 +38,7 @@ class GenreActivity : BaseActivity(), GenresContract.View, View.OnClickListener 
 			startActivity(getDetailIntent(track))
 		}
 
-		override fun onTrackButtonClicked(position: Int) {
+		override fun onMoreClicked(position: Int) {
 			val track = genrePresent.tracks[position]
 			val menuFragment = MenuFragment.newInstance(track)
 			menuFragment.show(supportFragmentManager, MENU_FRAGMENT_TAG)

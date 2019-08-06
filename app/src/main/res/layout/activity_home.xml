@@ -17,12 +17,13 @@
         app:srcCompat="@drawable/bg_rectangle" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonSearch"
         style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_rounded_corner"
         android:drawableStart="@drawable/ic_search"
+        android:onClick="onClick"
         android:drawableLeft="@drawable/ic_search"
         android:paddingStart="@dimen/dp_16"
         android:paddingLeft="@dimen/dp_16"
